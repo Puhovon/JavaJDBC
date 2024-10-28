@@ -19,7 +19,7 @@ public class DatabaseManager {
     static final String GET_READERS_BY_EMAIL = "SELECT * FROM readers WHERE email = ?";
     static final String REMOVE_READER = "DELETE FROM readers WHERE id = ?";
     static final String REMOVE_BOOK = "DELETE FROM books WHERE id = ?";
-    static final String ADD_BOOK = "INSERT book(name, author, publishedDate, isbn) VALUES (?, ?, ?, ?)";
+    static final String ADD_BOOK = "INSERT INTO  books(name, author, publishedDate, isbn) VALUES (?, ?, ?, ?)";
     static final String ADD_READER = "INSERT INTO readers (name, email) VALUES (?, ?)";
 
     private Connection connection;
@@ -62,6 +62,10 @@ public class DatabaseManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        System.out.println("---------------- Books ----------------");
+        books.forEach(b -> System.out.println(b.ToString()));
+        System.out.println("---------------------------------------");
+
         return books;
     }
 
@@ -88,7 +92,7 @@ public class DatabaseManager {
         try (PreparedStatement statement = connection.prepareStatement(ADD_BOOK)){
             statement.setString(1, name);
             statement.setString(2, author);
-            statement.setDate(3, (java.sql.Date) publishedDate);
+            statement.setDate(3, new java.sql.Date( publishedDate.getTime()));
             statement.setString(4, isbn);
 
             statement.executeUpdate();
@@ -131,6 +135,9 @@ public class DatabaseManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        System.out.println("---------------- Readers ----------------");
+        readers.forEach(r -> System.out.println(r.ToString()));
+        System.out.println("-----------------------------------------");
 
         return readers;
     }
