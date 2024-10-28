@@ -10,14 +10,24 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.projectlombok:lombok:1.18.26'
+
     testImplementation platform('org.junit:junit-bom:5.9.1')
+    runtimeOnly 'org.postgresql:postgresql:42.4.0'
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
 }
-
+jar {
+    manifest {
+        attributes(
+                "Manifest-Version": "1.0",
+                "Main-Class": "Main"
+        )
+    }
+}
 
 test {
     useJUnitPlatform()
